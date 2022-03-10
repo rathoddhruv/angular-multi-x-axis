@@ -78,11 +78,11 @@ export class AppComponent implements OnInit {
     weatherSeries.zIndex = 20;
     weatherSeries2.zIndex = 20;
 
-    dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
-    dateAxis.max = endOfYear(endOfYear(new Date())).getTime();
+    // dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
+    // dateAxis.max = endOfYear(endOfYear(new Date())).getTime();
 
-    dateAxis2.min = addMonths(dateAxis.min, -3).getTime();
-    dateAxis2.max = addMonths(dateAxis.max, -3).getTime();
+    // dateAxis2.min = addMonths(dateAxis.min, -3).getTime();
+    // dateAxis2.max = addMonths(dateAxis.max, -3).getTime();
     // dateAxis2.min = addYears(startOfYear(new Date()), -4).getTime();
     // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
 
@@ -282,9 +282,8 @@ export class AppComponent implements OnInit {
       demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " + +'';
       demandSeries2.tensionX = 0.77;
       demandSeries2.strokeDasharray = '8,4';
-      demandSeries2.hiddenInLegend = true;
-      demandSeries2.hide();
-      // demandSeries2.hiddenInLegend = true;
+      // demandSeries2.hide();
+      demandSeries2.hiddenInLegend = false;
 
       //////////////////////////////////////////////
       demandBullet2.fill = am4core.color('red');
@@ -312,6 +311,8 @@ export class AppComponent implements OnInit {
       weatherSeries.tooltipText =
         "{valueY.formatNumber('#,###.')}" + '° F' + '';
       weatherSeries.groupFields.valueY = 'average';
+      weatherSeries.hiddenInLegend = true;
+      weatherSeries.hide();
 
       // weatherSeries2 = chart.series.values[2] as am4charts.LineSeries;
       weatherBullet2 = weatherSeries2.bullets
@@ -337,6 +338,8 @@ export class AppComponent implements OnInit {
         "{valueY.formatNumber('#,###.')}" + '° F' + '';
       weatherSeries2.groupFields.valueY = 'average';
       chart.cursor.behavior = 'zoomX';
+      weatherSeries2.hiddenInLegend = true;
+      weatherSeries2.hide();
 
       am4core.getInteraction().body.events.on('keydown', (ev) => {
         console.log('keyboard keydown');
