@@ -451,8 +451,8 @@ export class AppComponent implements OnInit {
           true
         );
         (chart.xAxes.getIndex(1) as am4charts.DateAxis).zoomToDates(
-          new Date('2018-11-01'),
-          new Date('2018-11-07'),
+          new Date('2018-07-16'),
+          new Date('2018-08-06'),
           true,
           true,
           true
