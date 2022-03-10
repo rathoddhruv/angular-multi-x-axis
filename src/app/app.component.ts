@@ -78,9 +78,11 @@ export class AppComponent implements OnInit {
     weatherSeries.zIndex = 20;
     weatherSeries2.zIndex = 20;
 
-    // dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
-    // dateAxis.max = endOfYear(endOfYear(new Date())).getTime();
+    dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
+    dateAxis.max = endOfYear(endOfYear(new Date())).getTime();
 
+    dateAxis2.min = addMonths(dateAxis.min, -3).getTime();
+    dateAxis2.max = addMonths(dateAxis.max, -3).getTime();
     // dateAxis2.min = addYears(startOfYear(new Date()), -3).getTime();
     // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
 
@@ -89,8 +91,8 @@ export class AppComponent implements OnInit {
       chart.legend = new am4charts.Legend();
       chart.legend.position = 'absolute';
       chart.legend.parent = chart.bottomAxesContainer;
-      // chart.scrollbarX = new am4charts.XYChartScrollbar();
-      // chart.scrollbarX.parent = chart.bottomAxesContainer;
+      chart.scrollbarX = new am4charts.XYChartScrollbar();
+      chart.scrollbarX.parent = chart.bottomAxesContainer;
 
       // chart.dateFormatter.utc = true;
       // chart.maskBullets = false;
@@ -122,6 +124,7 @@ export class AppComponent implements OnInit {
 
       dateAxis2.id = 'dateAxisComp';
       dateAxis2.renderer.grid.template.location = 0.5;
+      // dateAxis.renderer.grid.template.location = 0.5;
       dateAxis2.renderer.labels.template.location = 0.00001;
       dateAxis2.renderer.minGridDistance = 100;
       dateAxis2.renderer.cellStartLocation = 0.2;
@@ -440,20 +443,20 @@ export class AppComponent implements OnInit {
 
       //     });
       chart.events.on('ready', () => {
-        // (chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
-        //   new Date('2020-11-01'),
-        //   new Date('2020-11-07'),
-        //   true,
-        //   true,
-        //   true
-        // );
-        // (chart.xAxes.getIndex(1) as am4charts.DateAxis).zoomToDates(
-        //   new Date('2018-11-01'),
-        //   new Date('2018-11-07'),
-        //   true,
-        //   true,
-        //   true
-        // );
+        (chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
+          new Date('2020-07-16'),
+          new Date('2020-08-06'),
+          true,
+          true,
+          true
+        );
+        (chart.xAxes.getIndex(1) as am4charts.DateAxis).zoomToDates(
+          new Date('2018-11-01'),
+          new Date('2018-11-07'),
+          true,
+          true,
+          true
+        );
       });
 
       this.chart = chart;
@@ -471,8 +474,8 @@ export class AppComponent implements OnInit {
   }
   addCompareSeries() {
     let dateAxis2 = this.chart.xAxes.push(new am4charts.DateAxis());
-    // dateAxis2.min = addYears(startOfYear(new Date()), -3).getTime();
-    // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
+    dateAxis2.min = addYears(startOfYear(new Date()), -3).getTime();
+    dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
   }
   generateChartData(start: Date, end: Date, interval, isWeather) {
     var chartData = [[], []];
@@ -482,14 +485,11 @@ export class AppComponent implements OnInit {
 
     let step = 0;
     var newDate = start;
-    var compareDate = addYears(start, 1);
     while (isBefore(newDate, end)) {
       if (interval == 3600) {
         newDate = addHours(newDate, 1);
-        compareDate = addYears(newDate, 1);
       } else {
         newDate = addMonths(newDate, 1);
-        compareDate = addYears(newDate, 1);
       }
 
       if (step >= 60) {
@@ -507,7 +507,6 @@ export class AppComponent implements OnInit {
       );
 
       chartData[0].push({
-        compareTime: compareDate.toUTCString(),
         time: newDate.toUTCString(),
         value: value,
         demand: demand,
