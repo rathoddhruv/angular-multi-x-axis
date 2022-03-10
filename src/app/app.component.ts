@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
 
     dateAxis2.min = addMonths(dateAxis.min, -3).getTime();
     dateAxis2.max = addMonths(dateAxis.max, -3).getTime();
-    // dateAxis2.min = addYears(startOfYear(new Date()), -3).getTime();
+    // dateAxis2.min = addYears(startOfYear(new Date()), -4).getTime();
     // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
 
     this.zone.runOutsideAngular(() => {
@@ -336,6 +336,7 @@ export class AppComponent implements OnInit {
       weatherSeries2.tooltipText =
         "{valueY.formatNumber('#,###.')}" + '° F' + '';
       weatherSeries2.groupFields.valueY = 'average';
+      chart.cursor.behavior = 'zoomX';
 
       am4core.getInteraction().body.events.on('keydown', (ev) => {
         console.log('keyboard keydown');
@@ -417,7 +418,7 @@ export class AppComponent implements OnInit {
         // this.setIntervalOptions(item);
         // this.checkDateExceedLimit(item, true);
 
-        chart.cursor.behavior = 'panX';
+        // chart.cursor.behavior = 'panX';
       });
 
       // chart.events.on("ready", () => {
@@ -451,8 +452,8 @@ export class AppComponent implements OnInit {
           true
         );
         (chart.xAxes.getIndex(1) as am4charts.DateAxis).zoomToDates(
-          new Date('2018-07-16'),
-          new Date('2018-08-06'),
+          new Date('2018-11-16'),
+          new Date('2018-12-06'),
           true,
           true,
           true
@@ -473,9 +474,9 @@ export class AppComponent implements OnInit {
     });
   }
   addCompareSeries() {
-    let dateAxis2 = this.chart.xAxes.push(new am4charts.DateAxis());
-    dateAxis2.min = addYears(startOfYear(new Date()), -3).getTime();
-    dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
+    // let dateAxis2 = this.chart.xAxes.push(new am4charts.DateAxis());
+    // dateAxis2.min = addYears(startOfYear(new Date()), -3).getTime();
+    // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
   }
   generateChartData(start: Date, end: Date, interval, isWeather) {
     var chartData = [[], []];
