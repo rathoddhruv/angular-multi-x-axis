@@ -373,10 +373,10 @@ export class AppComponent implements OnInit {
           new Date('2020-07-16'),
           new Date('2020-08-06')
         );
-        (chart.xAxes.getIndex(1) as am4charts.DateAxis).zoomToDates(
-          new Date('2018-11-16'),
-          new Date('2018-12-06')
-        );
+        // (chart.xAxes.getIndex(1) as am4charts.DateAxis).zoomToDates(
+        //   new Date('2018-11-16'),
+        //   new Date('2018-12-06')
+        // );
       });
 
       chart.map.getKey('consumption').hide(0);
@@ -393,6 +393,10 @@ export class AppComponent implements OnInit {
     this.chart = chart;
   }
   addZoom() {
+    (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
+      new Date('2020-07-16'),
+      new Date('2020-08-06')
+    );
     // let dateAxis2 = this.chart.xAxes.push(new am4charts.DateAxis());
     // dateAxis2.min = addYears(startOfYear(new Date()), -3).getTime();
     // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
