@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
       chart.dateFormatter.inputDateFormat = 'i';
       chart.dateFormatter.timezone = 'America/Chicago';
       chart.cursor = new XYCursor();
-      chart.cursor.behavior = 'panX';
+      chart.cursor.behavior = 'zoomX';
 
       chart.cursor.behavior = 'selectXY';
       // let consumptionState = consumptionSeries.columns.template.states.create(
@@ -351,42 +351,8 @@ export class AppComponent implements OnInit {
           // chart.cursor.behavior ="selectX";
           return;
         }
-        if (am4core.keyboard.isKey(ev.event, 'ctrl')) {
-          // consumptionState.dispose();
-          // consumptionState = consumptionSeries.columns.template.states.create(
-          //   "hidden"
-          // );
-          consumptionSeries.columns.template.cursorOverStyle =
-            MouseCursorStyle.default;
 
-          this.chartDiv1.nativeElement.style = `cursor: url("data:image/svg+xml,%3Csvg width='23px' height='23px' viewBox='0 0 23 23' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Eato/graph cursor - ctrl%3C/title%3E%3Cg id='ato/graph-cursor---ctrl' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cpath d='M12,-2.72848411e-12 L12.0003924,4.51760973 C15.4675652,4.76249954 18.2375005,7.53243478 18.4823903,10.9996076 L23,11 L23,12 L18.4824612,11.9993867 C18.2380361,15.4670295 15.4679005,18.2374768 12.0003924,18.4823903 L12,23 L11,23 L11.0006133,18.4824612 C7.5326352,18.2380125 4.76198751,15.4673648 4.51753877,11.9993867 L0,12 L0,11 L4.51760973,10.9996076 C4.76252322,7.53209953 7.53297047,4.76196388 11.0006133,4.51753877 L11,-2.72848411e-12 L12,-2.72848411e-12 Z M12.0009037,5.52061151 L12,8.5 L11,8.5 L11.0000973,5.52052886 C8.08545439,5.76093454 5.76149415,8.08458865 5.52061151,10.9990963 L8.5,10.999 L8.5,11.999 L5.52052886,11.9999027 C5.76096206,14.9148793 8.08512071,17.2390379 11.0000973,17.4794711 L11,14.5 L12,14.5 L12.0009037,17.4793885 C14.9154113,17.2385058 17.2390655,14.9145456 17.4794711,11.9999027 L14.5,11.999 L14.5,10.999 L17.4793885,10.9990963 C17.2385334,8.08492231 14.9150777,5.76146658 12.0009037,5.52061151 Z' id='Combined-Shape' fill='%23000000' fill-rule='nonzero'%3E%3C/path%3E%3C/g%3E%3C/svg%3E") 12 12, pointer !important;`;
-          chart.cursor.behavior = 'selectXY';
-          // chart.cursor.behavior ="selectX";
-          // this.chartDiv1.nativeElement.style = 'height: 500px';
-          return;
-        }
-
-        chart.cursor.behavior = 'panX';
-      });
-
-      am4core.getInteraction().body.events.on('keyup', (ev) => {
-        console.log('keyboard keyup key press');
-        if (am4core.keyboard.isKey(ev.event, 'shift')) {
-          chart.cursor.behavior = 'panX';
-        }
-        if (am4core.keyboard.isKey(ev.event, 'ctrl')) {
-          // consumptionSeries.columns.template.cursorOverStyle = MouseCursorStyle.pointer;
-          this.chartDiv1.nativeElement.style.cursor = 'default';
-          chart.cursor.behavior = 'panX';
-        }
-        // chart.cursorOverStyle = am4core.MouseCursorStyle.default;
-      });
-
-      am4core.getInteraction().body.events.on('DOWN', (ev) => {
-        console.log('keyboard key DOWN');
-        this.chartDiv1.nativeElement.style = `cursor: url("data:image/svg+xml,%3Csvg width='13px' height='13px' viewBox='0 0 13 13' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Eato/graph cursor%3C/title%3E%3Cg id='ato/graph-cursor' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cpath d='M7,-5.24025268e-14 L7,5.999 L13,6 L13,7 L7,6.999 L7,13 L6,13 L6,6.999 L0,7 L0,6 L6,5.999 L6,-5.24025268e-14 L7,-5.24025268e-14 Z' id='Combined-Shape' fill='%23000000' fill-rule='nonzero'%3E%3C/path%3E%3C/g%3E%3C/svg%3E"), pointer !important`;
-
-        chart.cursorOverStyle = am4core.MouseCursorStyle.default;
+        chart.cursor.behavior = 'zoomX';
       });
 
       let data = this.generateChartData(
@@ -397,69 +363,19 @@ export class AppComponent implements OnInit {
       );
       chart.map.getKey('demand').data = data;
       chart.map.getKey('consumption').data = data;
-      // chart.map.getKey("weather1").data = data[0];
 
-      // this.chart.data = this.generateChartData(0);
-      // setTimeout(() => {
-      //   chart.map.getKey("consumption1").data = data[1];
-      //   chart.map.getKey("demand1").data = data[1];
-      //   chart.map.getKey("weather2").data = data[1];
-      // }, 2000);
-      //(this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
-      //   startOfDay(new Date()),
-      //   endOfDay(addDays(new Date(), 12)),
-      //   true,
-      //   true
-      // );
       consumptionSeries.columns.template.events.on('hit', (ev) => {
         console.log(ev.target.dataItem);
-
-        // item.controls['fromDate'].setValue(ev.target.dataItem.dates.dateX, { emitEvent: false });
-        // //interval will be range
-        // item.controls['range'].setValue(optionRange[this.findIndexFromOptions(item.controls['interval'].value.value, item.controls['interval'].value.label, optionRange)], { emitEvent: false });
-        // this.setDateByRange(item, null, item.controls['fromDate'].value);
-        // this.setIntervalOptions(item);
-        // this.checkDateExceedLimit(item, true);
-
-        // chart.cursor.behavior = 'panX';
       });
 
-      // chart.events.on("ready", () => {
-      //   (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
-      // startOfDay(new Date()) ,
-      // endOfDay(new Date()),
-      // true,
-      // true
-      // );
-      // })
-      // this.chart.events.on("datavalidated", (ev) => {
-      //       // Create a range
-      //       console.log('datavalidated () => zoomToDates selected');
-      //       setTimeout(() => {
-      //        (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
-      //         startOfDay(new Date()) ,
-      //         endOfDay(new Date()),
-      //         true,
-      //         true
-      //         );
-
-      //       }, 50);
-
-      //     });
       chart.events.on('ready', () => {
         (chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
           new Date('2020-07-16'),
-          new Date('2020-08-06'),
-          true,
-          true,
-          true
+          new Date('2020-08-06')
         );
         (chart.xAxes.getIndex(1) as am4charts.DateAxis).zoomToDates(
           new Date('2018-11-16'),
-          new Date('2018-12-06'),
-          true,
-          true,
-          true
+          new Date('2018-12-06')
         );
       });
 
@@ -526,58 +442,7 @@ export class AppComponent implements OnInit {
     return data;
   }
 
-  // zoomChange(start, end) {
-  //   (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
-  //     start,
-  //     end,
-  //     true,
-  //     true
-  //   );
-  // }
-
-  recentRange(value: number) {
-    // let data: any;
-    // if (value === 7) {
-    //   (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
-    //     timeUnit: "hour",
-    //     count: 1
-    //   };
-    //   data = this.generateChartData(
-    //     addDays(new Date(), -7),
-    //     new Date(),
-    //     3600,
-    //     true
-    //   );
-    //   (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
-    //     addDays(new Date(), -7),
-    //     new Date(),
-    //     true,
-    //     true,
-    //     true
-    //   );
-    // } else if (value === 365) {
-    //   (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).baseInterval = {
-    //     timeUnit: "month",
-    //     count: 1
-    //   };
-    //   data = this.generateChartData(
-    //     addYears(new Date(), -3),
-    //     new Date(),
-    //     0,
-    //     true
-    //   );
-    //   (this.chart.map.getKey("dateAxis") as am4charts.DateAxis).zoomToDates(
-    //     addYears(new Date(), -3),
-    //     new Date(),
-    //     true,
-    //     true,
-    //     true
-    //   );
-    // }
-    // this.chart.map.getKey("demand").data = data[0];
-    // this.chart.map.getKey("consumption").data = data[0];
-    // this.chart.map.getKey("weather1").data = data[0];
-  }
+  recentRange(value: number) {}
 
   ngOnDestroy() {
     this.zone.runOutsideAngular(() => {
