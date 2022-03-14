@@ -379,18 +379,18 @@ export class AppComponent implements OnInit {
         );
       });
 
-      this.chart = chart;
-      this.chart.map.getKey('consumption').hide(0);
-      this.chart.map.getKey('demand').show();
-      this.chart.map.getKey('demand').fillOpacity = 0.5;
-      this.chart.map.getKey('demand').fill = am4core.color('#fc4e60');
-      this.chart.map.getKey('demand').bulletsContainer.hide();
-      this.chart.map.getKey('demand').cursorTooltipEnabled = true;
+      chart.map.getKey('consumption').hide(0);
+      chart.map.getKey('demand').show();
+      chart.map.getKey('demand').fillOpacity = 0.5;
+      chart.map.getKey('demand').fill = am4core.color('#fc4e60');
+      chart.map.getKey('demand').bulletsContainer.hide();
+      chart.map.getKey('demand').cursorTooltipEnabled = true;
 
       (
-        this.chart.map.getKey('consumptionAxis') as am4charts.ValueAxis
+        chart.map.getKey('consumptionAxis') as am4charts.ValueAxis
       ).cursorTooltipEnabled = true;
     });
+    this.chart = chart;
   }
   addZoom() {
     // let dateAxis2 = this.chart.xAxes.push(new am4charts.DateAxis());
