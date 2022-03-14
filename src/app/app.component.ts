@@ -43,6 +43,8 @@ useTheme(am4themes_animated);
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  dateAxis: any;
+  dateAxis2: any;
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private zone: NgZone,
@@ -390,10 +392,12 @@ export class AppComponent implements OnInit {
         chart.map.getKey('consumptionAxis') as am4charts.ValueAxis
       ).cursorTooltipEnabled = true;
     });
+    this.dateAxis = dateAxis;
+    this.dateAxis2 = dateAxis2;
     this.chart = chart;
   }
   addZoom() {
-    (this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
+    (this.dateAxis as am4charts.DateAxis).zoomToDates(
       new Date('2020-07-16'),
       new Date('2020-08-06')
     );
