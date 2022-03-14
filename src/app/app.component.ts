@@ -78,11 +78,11 @@ export class AppComponent implements OnInit {
     weatherSeries.zIndex = 20;
     weatherSeries2.zIndex = 20;
 
-    // dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
-    // dateAxis.max = endOfYear(endOfYear(new Date())).getTime();
+    dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
+    dateAxis.max = endOfYear(endOfYear(new Date())).getTime();
 
-    // dateAxis2.min = addMonths(dateAxis.min, -3).getTime();
-    // dateAxis2.max = addMonths(dateAxis.max, -3).getTime();
+    dateAxis2.min = addMonths(dateAxis.min, -3).getTime();
+    dateAxis2.max = addMonths(dateAxis.max, -3).getTime();
     // dateAxis2.min = addYears(startOfYear(new Date()), -4).getTime();
     // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
 
@@ -476,7 +476,7 @@ export class AppComponent implements OnInit {
       ).cursorTooltipEnabled = true;
     });
   }
-  addCompareSeries() {
+  addZoom() {
     // let dateAxis2 = this.chart.xAxes.push(new am4charts.DateAxis());
     // dateAxis2.min = addYears(startOfYear(new Date()), -3).getTime();
     // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
