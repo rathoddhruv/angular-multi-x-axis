@@ -36,7 +36,7 @@ import {
 } from 'date-fns';
 // import { data } from './intervalData/denver';
 import { data } from './intervalData/chicago-hour';
-import * as format from 'date-fns-tz/fp/format';
+import { format, utcToZonedTime } from 'date-fns-tz';
 useTheme(am4themes_animated);
 @Component({
   selector: 'my-app',
@@ -413,7 +413,7 @@ export class AppComponent implements OnInit {
     var temperature = 1600;
 
     let step = 0;
-    var newDate = start;
+    var newDate : Date = start;
     while (isBefore(newDate, end)) {
       if (interval == 3600) {
         newDate = addHours(newDate, 5);
@@ -434,10 +434,10 @@ export class AppComponent implements OnInit {
       temperature += Math.round(
         (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
-
+      debugger
       chartData[0].push({
         // time: newDate.toUTCString(),
-        time: format(newDate),
+        time: format(newDate,'yyyy-MM-dd'T'HH:mm:ss.SSSxxx'),
         value: value,
         demand: demand,
         temperature: temperature,
