@@ -432,7 +432,6 @@ export class AppComponent implements OnInit {
       temperature += Math.round(
         (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
-      debugger;
       chartData[0].push({
         // time: newDate.toUTCString(),
         time: format(newDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
@@ -445,6 +444,7 @@ export class AppComponent implements OnInit {
     if (interval == 3600) {
     } else {
     }
+    debugger
     return chartData;
     // return data;
   }
