@@ -361,7 +361,7 @@ export class AppComponent implements OnInit {
       let data = this.generateChartData(
         startOfYear(new Date('2020-07-16')),
         endOfYear(new Date('2020-07-16')),
-        0,
+        3600,
         true
       );
       chart.map.getKey('demand').data = data;
@@ -390,7 +390,9 @@ export class AppComponent implements OnInit {
       chart.map.getKey('demand').bulletsContainer.hide();
       chart.map.getKey('demand').cursorTooltipEnabled = true;
 
-      (chart.map.getKey('consumptionAxis') as am4charts.ValueAxis).cursorTooltipEnabled = true;
+      (
+        chart.map.getKey('consumptionAxis') as am4charts.ValueAxis
+      ).cursorTooltipEnabled = true;
     });
 
     this.chart = chart;
@@ -405,7 +407,7 @@ export class AppComponent implements OnInit {
     // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
   }
   generateChartData(start: Date, end: Date, interval, isWeather) {
-    var chartData = [[], []];
+    var chartData = [];
     var value = 1600;
     var demand = 1600;
     var temperature = 1600;
@@ -432,19 +434,19 @@ export class AppComponent implements OnInit {
       temperature += Math.round(
         (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
-      chartData[0].push({
+      chartData.push({
         // time: newDate.toUTCString(),
         time: format(newDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
         value: value,
         demand: demand,
-        temperature: temperature,
+        // temperature: temperature,
       });
     }
 
     if (interval == 3600) {
     } else {
     }
-    debugger
+    debugger;
     return chartData;
     // return data;
   }
