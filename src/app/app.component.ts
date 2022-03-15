@@ -9,7 +9,7 @@ import {
 import * as am4charts from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
 import { color, create, useTheme } from '@amcharts/amcharts4/core';
-import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+// import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import {
   Component,
   OnInit,
@@ -37,7 +37,7 @@ import {
 // import { data } from './intervalData/denver';
 import { data } from './intervalData/chicago-hour';
 import { format, utcToZonedTime } from 'date-fns-tz';
-useTheme(am4themes_animated);
+// useTheme(am4themes_animated);
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
@@ -159,10 +159,10 @@ export class AppComponent implements OnInit {
       demandAxis.title.rotation = 270;
       let consumptionState =
         consumptionSeries.columns.template.states.create('hover');
-      demandSeries.bullets.push(new am4charts.CircleBullet());
-      let demandBullet2 = demandSeries1.bullets.push(
-        new am4charts.CircleBullet()
-      );
+      // demandSeries.bullets.push(new am4charts.CircleBullet());
+      // let demandBullet1 = demandSeries1.bullets.push(
+      //   new am4charts.CircleBullet()
+      // );
 
       // Create series
       consumptionSeries.columns.template.cursorOverStyle =
@@ -222,6 +222,7 @@ export class AppComponent implements OnInit {
       consumptionSeries2.clustered = false;
       consumptionSeries2.hide();
 
+      demandSeries.defaultState.transitionDuration = 0;
       demandSeries.sequencedInterpolation = true;
       demandSeries.dataFields.valueY = 'demand';
       demandSeries.dataFields.dateX = 'time';
@@ -244,9 +245,10 @@ export class AppComponent implements OnInit {
       demandSeries.groupFields.valueY = 'high';
       demandSeries.tensionX = 0.77;
 
+      demandSeries1.defaultState.transitionDuration = 0;
       demandSeries1.sequencedInterpolation = true;
       demandSeries1.dataFields.valueY = 'value';
-      demandSeries1.dataFields.dateX = 'time';
+      demandSeries1.dataFields.dateX = 'time1';
       demandSeries1.yAxis = demandAxis;
       demandSeries1.name = 'demand1';
       demandSeries1.stroke = am4core.color('red');
@@ -265,10 +267,10 @@ export class AppComponent implements OnInit {
       demandSeries1.tensionX = 0.77;
       demandSeries1.strokeDasharray = '8,4';
       // demandSeries1.hide();
-      demandSeries1.hiddenInLegend = false;
+      // demandSeries1.hiddenInLegend = false;
 
       //////////////////////////////////////////////
-      demandBullet2.fill = am4core.color('red');
+      // demandBullet1.fill = am4core.color('red');
 
       am4core.getInteraction().body.events.on('keydown', (ev) => {
         console.log('keyboard keydown');
@@ -289,10 +291,11 @@ export class AppComponent implements OnInit {
         true
       );
       chart.map.getKey('demand').data = data;
+      chart.map.getKey('demand1').data = data;
 
       this.dateAxis = dateAxis;
       this.dateAxis2 = dateAxis2;
-      chart.events.on('ready', () => {});
+      // chart.events.on('ready', () => {});
 
       chart.map.getKey('consumption').hide(0);
       chart.map.getKey('demand').show();
@@ -350,6 +353,7 @@ export class AppComponent implements OnInit {
       chartData.push({
         // time: newDate.toUTCString(),
         time: format(newDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
+        time1: format(addMonths(newDate, -3), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
         value: value,
         demand: demand,
         // temperature: temperature,
