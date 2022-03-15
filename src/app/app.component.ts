@@ -390,9 +390,7 @@ export class AppComponent implements OnInit {
       chart.map.getKey('demand').bulletsContainer.hide();
       chart.map.getKey('demand').cursorTooltipEnabled = true;
 
-      (
-        chart.map.getKey('consumptionAxis') as am4charts.ValueAxis
-      ).cursorTooltipEnabled = true;
+      (chart.map.getKey('consumptionAxis') as am4charts.ValueAxis).cursorTooltipEnabled = true;
     });
 
     this.chart = chart;
@@ -413,7 +411,7 @@ export class AppComponent implements OnInit {
     var temperature = 1600;
 
     let step = 0;
-    var newDate : Date = start;
+    var newDate: Date = start;
     while (isBefore(newDate, end)) {
       if (interval == 3600) {
         newDate = addHours(newDate, 5);
@@ -434,10 +432,10 @@ export class AppComponent implements OnInit {
       temperature += Math.round(
         (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
-      debugger
+      debugger;
       chartData[0].push({
         // time: newDate.toUTCString(),
-        time: format(newDate,'yyyy-MM-dd'T'HH:mm:ss.SSSxxx'),
+        time: format(newDate, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"),
         value: value,
         demand: demand,
         temperature: temperature,
