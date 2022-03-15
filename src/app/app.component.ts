@@ -71,13 +71,13 @@ export class AppComponent implements OnInit {
     // let weatherSeries = chart.series.push(new am4charts.LineSeries());
 
     let consumptionSeries2 = chart.series.push(new am4charts.ColumnSeries());
-    let demandSeries2 = chart.series.push(new am4charts.LineSeries());
+    let demandSeries1 = chart.series.push(new am4charts.LineSeries());
     // let weatherSeries2 = chart.series.push(new am4charts.LineSeries());
 
     consumptionSeries.zIndex = 10;
     consumptionSeries2.zIndex = 10;
     demandSeries.zIndex = 20;
-    demandSeries2.zIndex = 20;
+    demandSeries1.zIndex = 20;
     // weatherSeries.zIndex = 20;
     // weatherSeries2.zIndex = 20;
 
@@ -106,7 +106,6 @@ export class AppComponent implements OnInit {
 
       chart.cursor.behavior = 'selectXY';
 
-
       dateAxis.id = 'dateAxis';
       dateAxis.renderer.grid.template.location = 0;
       // dateAxis.renderer.grid.template.location = 0.5;
@@ -120,7 +119,7 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
 
-      dateAxis.baseInterval = { timeUnit: 'hour', count: 1 };
+      dateAxis.baseInterval = { timeUnit: 'hour', count: 5 };
 
       dateAxis2.id = 'dateAxisComp';
       dateAxis2.renderer.grid.template.location = 0.5;
@@ -155,15 +154,13 @@ export class AppComponent implements OnInit {
       demandAxis.background.fill = am4core.color('#fff');
       demandAxis.renderer.labels.template.fontWeight = 'bold';
 
-      
-
       demandAxis.strictMinMax = false;
       // demandAxis.min = 0;
       demandAxis.title.rotation = 270;
       let consumptionState =
         consumptionSeries.columns.template.states.create('hover');
       demandSeries.bullets.push(new am4charts.CircleBullet());
-      let demandBullet2 = demandSeries2.bullets.push(
+      let demandBullet2 = demandSeries1.bullets.push(
         new am4charts.CircleBullet()
       );
 
@@ -247,37 +244,34 @@ export class AppComponent implements OnInit {
       demandSeries.groupFields.valueY = 'high';
       demandSeries.tensionX = 0.77;
 
-      demandSeries2.sequencedInterpolation = true;
-      demandSeries2.dataFields.valueY = 'value';
-      demandSeries2.dataFields.dateX = 'time';
-      demandSeries2.yAxis = demandAxis;
-      demandSeries2.name = 'demand1';
-      demandSeries2.stroke = am4core.color('red');
-      demandSeries2.propertyFields.strokeDasharray = 'dashLength';
-      demandSeries2.strokeWidth = 2;
-      demandSeries2.stroke = am4core.color('#D90368');
-      demandSeries2.tooltip.background.stroke = am4core.color('#D90368');
-      demandSeries2.tooltip.label.fontWeight = 'bold';
-      demandSeries2.connect = false;
-      demandSeries2.tooltip.background.fill = am4core.color('#ffffff');
-      demandSeries2.tooltip.label.fill = am4core.color('#000000');
-      demandSeries2.id = 'demand1';
-      demandSeries2.tooltip.background.strokeWidth = 2;
-      demandSeries2.tooltip.getFillFromObject = false;
-      demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " + +'';
-      demandSeries2.tensionX = 0.77;
-      demandSeries2.strokeDasharray = '8,4';
-      // demandSeries2.hide();
-      demandSeries2.hiddenInLegend = false;
+      demandSeries1.sequencedInterpolation = true;
+      demandSeries1.dataFields.valueY = 'value';
+      demandSeries1.dataFields.dateX = 'time';
+      demandSeries1.yAxis = demandAxis;
+      demandSeries1.name = 'demand1';
+      demandSeries1.stroke = am4core.color('red');
+      demandSeries1.propertyFields.strokeDasharray = 'dashLength';
+      demandSeries1.strokeWidth = 2;
+      demandSeries1.stroke = am4core.color('#D90368');
+      demandSeries1.tooltip.background.stroke = am4core.color('#D90368');
+      demandSeries1.tooltip.label.fontWeight = 'bold';
+      demandSeries1.connect = false;
+      demandSeries1.tooltip.background.fill = am4core.color('#ffffff');
+      demandSeries1.tooltip.label.fill = am4core.color('#000000');
+      demandSeries1.id = 'demand1';
+      demandSeries1.tooltip.background.strokeWidth = 2;
+      demandSeries1.tooltip.getFillFromObject = false;
+      demandSeries1.tooltipText = "{valueY.formatNumber('#,###.')} " + +'';
+      demandSeries1.tensionX = 0.77;
+      demandSeries1.strokeDasharray = '8,4';
+      // demandSeries1.hide();
+      demandSeries1.hiddenInLegend = false;
 
       //////////////////////////////////////////////
       demandBullet2.fill = am4core.color('red');
 
-     
-
       am4core.getInteraction().body.events.on('keydown', (ev) => {
         console.log('keyboard keydown');
-     
 
         if (am4core.keyboard.isKey(ev.event, 'shift')) {
           chart.cursor.behavior = 'zoomX';
@@ -291,16 +285,14 @@ export class AppComponent implements OnInit {
       let data = this.generateChartData(
         startOfYear(new Date('2020-07-16')),
         endOfYear(new Date('2020-07-16')),
-        3600,
+        18000,
         true
       );
       chart.map.getKey('demand').data = data;
-      
+
       this.dateAxis = dateAxis;
       this.dateAxis2 = dateAxis2;
-      chart.events.on('ready', () => {
-    
-      });
+      chart.events.on('ready', () => {});
 
       chart.map.getKey('consumption').hide(0);
       chart.map.getKey('demand').show();
@@ -334,8 +326,8 @@ export class AppComponent implements OnInit {
     let step = 0;
     var newDate: Date = start;
     while (isBefore(newDate, end)) {
-      if (interval == 3600) {
-        newDate = addHours(newDate, 1);
+      if (interval == 18000) {
+        newDate = addHours(newDate, 5);
       } else {
         newDate = addMonths(newDate, 1);
       }
@@ -346,7 +338,9 @@ export class AppComponent implements OnInit {
         step = step + 5;
       }
 
-      value += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 100);
+      value += Math.round(
+        (Math.random() < 0.5 ? 1 : -1) * Math.random() * 1000
+      );
       demand += Math.round(
         (Math.random() < 0.5 ? 1 : -1) * Math.random() * 100
       );
@@ -362,7 +356,7 @@ export class AppComponent implements OnInit {
       });
     }
 
-    if (interval == 3600) {
+    if (interval == 18000) {
     } else {
     }
     debugger;
