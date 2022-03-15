@@ -80,8 +80,8 @@ export class AppComponent implements OnInit {
     weatherSeries.zIndex = 20;
     weatherSeries2.zIndex = 20;
 
-    dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
-    dateAxis.max = endOfYear(endOfYear(new Date())).getTime();
+    dateAxis.min = addYears(startOfYear(new Date('2020-07-16')), 0).getTime();
+    dateAxis.max = endOfYear(endOfYear(new Date('2020-07-16'))).getTime();
 
     dateAxis2.min = addMonths(dateAxis.min, -3).getTime();
     dateAxis2.max = addMonths(dateAxis.max, -3).getTime();
@@ -358,24 +358,25 @@ export class AppComponent implements OnInit {
       });
 
       let data = this.generateChartData(
-        addYears(new Date(), -3),
-        new Date(),
+        startOfYear(new Date('2020-07-16')),
+        endOfYear(new Date('2020-07-16')),
         0,
         true
       );
       chart.map.getKey('demand').data = data;
-      chart.map.getKey('consumption').data = data;
+      // chart.map.getKey('consumption').data = data;
 
       consumptionSeries.columns.template.events.on('hit', (ev) => {
         console.log(ev.target.dataItem);
       });
-
+      this.dateAxis = dateAxis;
+      this.dateAxis2 = dateAxis2;
       chart.events.on('ready', () => {
-        (chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
-          new Date('2020-07-16'),
-          new Date('2020-08-06')
-        );
-        // (chart.xAxes.getIndex(1) as am4charts.DateAxis).zoomToDates(
+        // (this.dateAxis as am4charts.DateAxis).zoomToDates(
+        //   new Date('2020-07-16'),
+        //   new Date('2020-08-06')
+        // );
+        // (this.dateAxis2 as am4charts.DateAxis).zoomToDates(
         //   new Date('2018-11-16'),
         //   new Date('2018-12-06')
         // );
@@ -392,8 +393,7 @@ export class AppComponent implements OnInit {
         chart.map.getKey('consumptionAxis') as am4charts.ValueAxis
       ).cursorTooltipEnabled = true;
     });
-    this.dateAxis = dateAxis;
-    this.dateAxis2 = dateAxis2;
+
     this.chart = chart;
   }
   addZoom() {
@@ -415,7 +415,7 @@ export class AppComponent implements OnInit {
     var newDate = start;
     while (isBefore(newDate, end)) {
       if (interval == 3600) {
-        newDate = addHours(newDate, 1);
+        newDate = addHours(newDate, 5);
       } else {
         newDate = addMonths(newDate, 1);
       }
