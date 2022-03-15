@@ -445,7 +445,6 @@ export class AppComponent implements OnInit {
     if (interval == 3600) {
     } else {
     }
-    debugger;
     // return chartData;
     return data;
   }
