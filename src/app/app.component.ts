@@ -36,6 +36,7 @@ import {
 } from 'date-fns';
 // import { data } from './intervalData/denver';
 import { data } from './intervalData/chicago-hour';
+import * as format from 'date-fns-tz/fp/format';
 useTheme(am4themes_animated);
 @Component({
   selector: 'my-app',
@@ -435,7 +436,8 @@ export class AppComponent implements OnInit {
       );
 
       chartData[0].push({
-        time: newDate.toUTCString(),
+        // time: newDate.toUTCString(),
+        time: format(newDate),
         value: value,
         demand: demand,
         temperature: temperature,
@@ -445,8 +447,8 @@ export class AppComponent implements OnInit {
     if (interval == 3600) {
     } else {
     }
-    // return chartData;
-    return data;
+    return chartData;
+    // return data;
   }
 
   recentRange(value: number) {}
