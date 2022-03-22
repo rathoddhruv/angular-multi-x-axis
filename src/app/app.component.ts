@@ -114,8 +114,8 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.cellStartLocation = 0.2;
       dateAxis.renderer.cellEndLocation = 0.8;
 
-      // dateAxis.tooltipDateFormat = 'hh:mm a, d MMMM yyyy';
-      // dateAxis.tooltipText = '{HH:mm:ss}';
+      dateAxis.tooltipDateFormat = 'hh:mm a, d MMMM yyyy';
+      dateAxis.tooltipText = '{HH:mm:ss}';
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
 
@@ -292,22 +292,28 @@ export class AppComponent implements OnInit {
       );
       chart.map.getKey('demand').data = data;
       chart.map.getKey('demand1').data = data;
+      // chart.cursor = new am4charts.XYCursor();
       chart.cursor = new am4charts.XYCursor();
-      dateAxis.tooltip.label.adapter.add('text', (text, target) => {
-        debugger;
-        if (chart.cursor.xPosition) {
-          var dataItem = dateAxis.getSeriesDataItem(
-            demandAxis,
-            dateAxis.toAxisPosition(chart.cursor.xPosition),
-            true
-          );
-        }
+      dateAxis.tooltip.label.adapter.add('text',  (text, target) => {
+        var dataItem = dateAxis.getSeriesDataItem(
+          chart.map.getKey('demand'),
+          dateAxis.toAxisPosition(chart.cursor.xPosition),
+          true
+        );
 
-        if (dataItem) {
+        // if (dataItem) {
+        //   return (
+        //     chart.dateFormatter.format(text, 'MMM dd') +
+        //     '\n  \n' +
+        //     chart.dateFormatter.format(dataItem.dataContext.time1, 'MMM dd')
+        //   );
+        // }
+         if (dataItem) {
           return (
             text +
-            ' vs ' +
-            chart.dateFormatter.format(dataItem.dataContext.time1, 'MMM dd')
+            '\n  \n' +
+            chart.dateFormatter.format(dataItem.dataContext.time1, dateAxis.tooltipDateFormat)
+            // dataItem.dataContext.time1
           );
         }
         return text;
