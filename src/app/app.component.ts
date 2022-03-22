@@ -292,9 +292,10 @@ export class AppComponent implements OnInit {
       );
       chart.map.getKey('demand').data = data;
       chart.map.getKey('demand1').data = data;
+      chart.cursor = new am4charts.XYCursor();
       dateAxis.tooltip.label.adapter.add('text', (text, target) => {
         debugger;
-        if (chart.cursor.xPosition != null) {
+        if (chart.cursor.xPosition) {
           var dataItem = dateAxis.getSeriesDataItem(
             demandAxis,
             dateAxis.toAxisPosition(chart.cursor.xPosition),
@@ -306,10 +307,7 @@ export class AppComponent implements OnInit {
           return (
             text +
             ' vs ' +
-            chart.dateFormatter.format(
-              dataItem.dataContext.dateCompare,
-              'MMM dd'
-            )
+            chart.dateFormatter.format(dataItem.dataContext.time1, 'MMM dd')
           );
         }
         return text;
