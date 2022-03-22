@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     let chart = (this.chart = am4core.create('chartdiv_1', am4charts.XYChart));
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    let dateAxis2 = chart.xAxes.push(new am4charts.DateAxis());
+    // let dateAxis2 = chart.xAxes.push(new am4charts.DateAxis());
     let consumptionAxis = chart.yAxes.push(new am4charts.ValueAxis());
     let demandAxis = chart.yAxes.push(new am4charts.ValueAxis());
     demandAxis.renderer.opposite = true;
@@ -84,8 +84,8 @@ export class AppComponent implements OnInit {
     dateAxis.min = addYears(startOfYear(new Date('2020-07-16')), 0).getTime();
     dateAxis.max = endOfYear(endOfYear(new Date('2020-07-16'))).getTime();
 
-    dateAxis2.min = addMonths(dateAxis.min, -3).getTime();
-    dateAxis2.max = addMonths(dateAxis.max, -3).getTime();
+    // dateAxis2.min = addMonths(dateAxis.min, -3).getTime();
+    // dateAxis2.max = addMonths(dateAxis.max, -3).getTime();
     // dateAxis2.min = addYears(startOfYear(new Date()), -4).getTime();
     // dateAxis2.max = addYears(startOfYear(new Date()), -1).getTime();
 
@@ -121,20 +121,28 @@ export class AppComponent implements OnInit {
 
       dateAxis.baseInterval = { timeUnit: 'hour', count: 5 };
 
-      dateAxis2.id = 'dateAxisComp';
-      dateAxis2.renderer.grid.template.location = 0.5;
-      // dateAxis.renderer.grid.template.location = 0.5;
-      dateAxis2.renderer.labels.template.location = 0.00001;
-      dateAxis2.renderer.minGridDistance = 100;
-      dateAxis2.renderer.cellStartLocation = 0.2;
-      dateAxis2.renderer.cellEndLocation = 0.8;
+      dateAxis.renderer.labels.template.adapter.add("text", (text, target: any) => {
+        debugger
+        if (target !== undefined) {
+            dateAxis.dateFormats.setKey("day", "M/d");
+        }
+        return text;
+      })
 
-      dateAxis2.tooltipDateFormat = 'hh:mm a, d MMMM yyyy';
-      dateAxis2.tooltipText = '{HH:mm:ss}';
-      dateAxis2.renderer.grid.template.disabled = true;
-      dateAxis2.renderer.fullWidthTooltip = true;
+      // dateAxis2.id = 'dateAxisComp';
+      // dateAxis2.renderer.grid.template.location = 0.5;
+      // // dateAxis.renderer.grid.template.location = 0.5;
+      // dateAxis2.renderer.labels.template.location = 0.00001;
+      // dateAxis2.renderer.minGridDistance = 100;
+      // dateAxis2.renderer.cellStartLocation = 0.2;
+      // dateAxis2.renderer.cellEndLocation = 0.8;
 
-      dateAxis2.baseInterval = { timeUnit: 'hour', count: 1 };
+      // dateAxis2.tooltipDateFormat = 'hh:mm a, d MMMM yyyy';
+      // dateAxis2.tooltipText = '{HH:mm:ss}';
+      // dateAxis2.renderer.grid.template.disabled = true;
+      // dateAxis2.renderer.fullWidthTooltip = true;
+
+      // dateAxis2.baseInterval = { timeUnit: 'hour', count: 1 };
       // dateAxis2.hide();
 
       consumptionAxis.title.text = 'consumption';
@@ -294,7 +302,7 @@ export class AppComponent implements OnInit {
       chart.map.getKey('demand1').data = data;
 
       this.dateAxis = dateAxis;
-      this.dateAxis2 = dateAxis2;
+      // this.dateAxis2 = dateAxis2;
       // chart.events.on('ready', () => {});
 
       chart.map.getKey('consumption').hide(0);
