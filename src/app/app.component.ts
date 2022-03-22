@@ -121,13 +121,25 @@ export class AppComponent implements OnInit {
 
       dateAxis.baseInterval = { timeUnit: 'hour', count: 5 };
 
-      dateAxis.renderer.labels.template.adapter.add("text", (text, target: any) => {
-        debugger
-        if (target !== undefined) {
-            dateAxis.dateFormats.setKey("day", "M/d");
+      dateAxis.tooltip.label.adapter.add('text', (text, target) => {
+        var dataItem = dateAxis.getSeriesDataItem(
+          demandAxis,
+          dateAxis.toAxisPosition(chart.cursor.xPosition),
+          true
+        );
+        debugger;
+        if (dataItem) {
+          return (
+            text +
+            ' vs ' +
+            chart.dateFormatter.format(
+              dataItem.dataContext.dateCompare,
+              'MMM dd'
+            )
+          );
         }
         return text;
-      })
+      });
 
       // dateAxis2.id = 'dateAxisComp';
       // dateAxis2.renderer.grid.template.location = 0.5;
