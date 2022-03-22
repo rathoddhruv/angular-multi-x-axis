@@ -114,32 +114,12 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.cellStartLocation = 0.2;
       dateAxis.renderer.cellEndLocation = 0.8;
 
-      dateAxis.tooltipDateFormat = 'hh:mm a, d MMMM yyyy';
-      dateAxis.tooltipText = '{HH:mm:ss}';
+      // dateAxis.tooltipDateFormat = 'hh:mm a, d MMMM yyyy';
+      // dateAxis.tooltipText = '{HH:mm:ss}';
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
 
       dateAxis.baseInterval = { timeUnit: 'hour', count: 5 };
-
-      dateAxis.tooltip.label.adapter.add('text', (text, target) => {
-        var dataItem = dateAxis.getSeriesDataItem(
-          demandAxis,
-          dateAxis.toAxisPosition(chart.cursor.xPosition),
-          true
-        );
-        debugger;
-        if (dataItem) {
-          return (
-            text +
-            ' vs ' +
-            chart.dateFormatter.format(
-              dataItem.dataContext.dateCompare,
-              'MMM dd'
-            )
-          );
-        }
-        return text;
-      });
 
       // dateAxis2.id = 'dateAxisComp';
       // dateAxis2.renderer.grid.template.location = 0.5;
@@ -312,6 +292,28 @@ export class AppComponent implements OnInit {
       );
       chart.map.getKey('demand').data = data;
       chart.map.getKey('demand1').data = data;
+      dateAxis.tooltip.label.adapter.add('text', (text, target) => {
+        debugger;
+        if (chart.cursor.xPosition != null) {
+          var dataItem = dateAxis.getSeriesDataItem(
+            demandAxis,
+            dateAxis.toAxisPosition(chart.cursor.xPosition),
+            true
+          );
+        }
+
+        if (dataItem) {
+          return (
+            text +
+            ' vs ' +
+            chart.dateFormatter.format(
+              dataItem.dataContext.dateCompare,
+              'MMM dd'
+            )
+          );
+        }
+        return text;
+      });
 
       this.dateAxis = dateAxis;
       // this.dateAxis2 = dateAxis2;
