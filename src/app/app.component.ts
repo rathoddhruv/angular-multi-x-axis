@@ -325,7 +325,7 @@ export class AppComponent implements OnInit {
             ' \n ' +
             chart.dateFormatter.format(
               dataItem.dataContext.time1,
-              dateAxis.tooltipDateFormat
+              "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
             )
           );
         }
