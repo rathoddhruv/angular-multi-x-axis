@@ -311,7 +311,7 @@ export class AppComponent implements OnInit {
       //   chart.map.getKey('consumptionAxis') as am4charts.ValueAxis
       // ).cursorTooltipEnabled = true;
       dateAxis.tooltip.label.adapter.add('text', (text, target) => {
-        var dataItem : any = dateAxis.getSeriesDataItem(
+        var dataItem: any = dateAxis.getSeriesDataItem(
           chart.map.getKey('demand'),
           dateAxis.toAxisPosition(chart.cursor.xPosition),
           true
@@ -320,7 +320,14 @@ export class AppComponent implements OnInit {
         if (dataItem != null) {
           debugger;
           // if ((dataItem.dataContext as any).time1 != null)
-            return text + ' vs ' + dataItem.dataContext.time1
+          return (
+            text +
+            ' \n ' +
+            chart.dateFormatter.format(
+              dataItem.dataContext.time1,
+              dateAxis.tooltipDateFormat
+            )
+          );
         }
         return text;
       });
