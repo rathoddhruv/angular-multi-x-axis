@@ -264,7 +264,7 @@ export class AppComponent implements OnInit {
       demandSeries1.id = 'demand1';
       demandSeries1.tooltip.background.strokeWidth = 2;
       demandSeries1.tooltip.getFillFromObject = false;
-      demandSeries1.tooltipText = "{valueY.formatNumber('#,###.')} " + +'';
+      demandSeries1.tooltipText = "{valueY.formatNumber('#,###.')} " + +"{valueX}";
       demandSeries1.tensionX = 0.77;
       demandSeries1.strokeDasharray = '8,4';
       // demandSeries1.hide();
